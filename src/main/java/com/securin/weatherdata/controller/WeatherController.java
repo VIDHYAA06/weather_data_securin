@@ -1,12 +1,12 @@
 package com.securin.weatherdata.controller;
 
-import com.securin.weatherdata.entity.Weather;
+import com.securin.weatherdata.dto.WeatherResponseDTO;
+import com.securin.weatherdata.dto.MonthlyTemperatureStats;
 import com.securin.weatherdata.service.WeatherService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/weather")
@@ -17,23 +17,25 @@ public class WeatherController {
     public WeatherController(WeatherService service) {
         this.service = service;
     }
+
     @PostMapping("/upload")
     public String uploadCSV(@RequestParam("file") MultipartFile file) {
         service.uploadCSV(file);
         return "CSV uploaded successfully!";
     }
     @GetMapping("/month")
-    public List<Weather> getWeatherByMonth(
+    public List<WeatherResponseDTO> getWeatherByMonth(
             @RequestParam int year,
             @RequestParam int month) {
 
         return service.getWeatherByMonth(year, month);
     }
 
+    
     @GetMapping("/stats/{year}")
-    public Map<String, Double> getYearlyStats(
+    public List<MonthlyTemperatureStats> getYearlyStats(
             @PathVariable int year) {
 
-        return service.getYearlyTemperatureStats(year);
+        return service.getMonthlyTemperatureStats(year);
     }
 }

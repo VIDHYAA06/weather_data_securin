@@ -1,16 +1,16 @@
 package com.securin.weatherdata.service;
 
-import com.securin.weatherdata.entity.Weather;
+import com.securin.weatherdata.dto.MonthlyTemperatureStats;
+import com.securin.weatherdata.dto.WeatherResponseDTO;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.Map;
 
 public interface WeatherService {
 
     void uploadCSV(MultipartFile file);
 
-    List<Weather> getWeatherByMonth(int year, int month);
+    List<WeatherResponseDTO> getWeatherByMonth(int year, int month);
 
-    Map<String, Double> getYearlyTemperatureStats(int year);
+    List<MonthlyTemperatureStats> getMonthlyTemperatureStats(int year);
 }
