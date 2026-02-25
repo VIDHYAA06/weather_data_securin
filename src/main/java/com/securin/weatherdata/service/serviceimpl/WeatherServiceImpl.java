@@ -1,5 +1,5 @@
 package com.securin.weatherdata.service.serviceimpl;
-import com.securin.weatherdata.exception.CSVProcessingException;
+
 import com.opencsv.CSVReader;
 import com.securin.weatherdata.dto.MonthlyTemperatureStats;
 import com.securin.weatherdata.dto.WeatherResponseDTO;
@@ -23,6 +23,7 @@ public class WeatherServiceImpl implements WeatherService {
         this.repository = repository;
     }
 
+   
 
     @Override
     public void uploadCSV(MultipartFile file) {
@@ -51,9 +52,11 @@ public class WeatherServiceImpl implements WeatherService {
             repository.saveAll(weatherList);
 
         } catch (Exception e) {
-           throw new CSVProcessingException("Error processing CSV file", e);
+            throw new CSVProcessingException("Error processing CSV file", e);
         }
     }
+
+ 
 
     @Override
     public List<WeatherResponseDTO> getWeatherByMonth(int year, int month) {
@@ -75,18 +78,20 @@ public class WeatherServiceImpl implements WeatherService {
                 .toList();
     }
 
-
+    
     @Override
     public List<MonthlyTemperatureStats> getMonthlyTemperatureStats(int year) {
 
         List<Weather> yearlyData = repository.findAll().stream()
+                .filter(w -> w.getDateTime() != null)
                 .filter(w -> w.getDateTime().getYear() == year)
                 .filter(w -> w.getTemperature() != null)
                 .toList();
 
-        Map<Integer, List<Double>> groupedByMonth = new HashMap<>();
+        Map<Integer, List<Double>> groupedByMonth = new TreeMap<>(); // sorted by month
 
         for (Weather weather : yearlyData) {
+
             int month = weather.getDateTime().getMonthValue();
 
             groupedByMonth
@@ -98,7 +103,8 @@ public class WeatherServiceImpl implements WeatherService {
 
         for (Map.Entry<Integer, List<Double>> entry : groupedByMonth.entrySet()) {
 
-            List<Double> temps = entry.getValue().stream()
+            List<Double> temps = entry.getValue()
+                    .stream()
                     .sorted()
                     .toList();
 
@@ -117,15 +123,17 @@ public class WeatherServiceImpl implements WeatherService {
         return result;
     }
 
-
+   
     private double calculateMedian(List<Double> list) {
+
         int size = list.size();
         if (size == 0) return 0;
 
-        if (size % 2 == 0)
+        if (size % 2 == 0) {
             return (list.get(size / 2 - 1) + list.get(size / 2)) / 2;
-        else
+        } else {
             return list.get(size / 2);
+        }
     }
 
     private LocalDateTime convertToDateTime(String value) {
