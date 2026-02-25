@@ -22,17 +22,13 @@ Lombok
 
 Project Structure:
 
-com.securin.weatherdata
- ├── controller
- ├── service
- ├── repository
- ├── entity
- ├── dto
- └── exception
+<img width="404" height="739" alt="image" src="https://github.com/user-attachments/assets/04642c4f-6c78-4967-aaf9-fbf6c6da5064" />
+
 
 
  END POINTS:
  Base url : http://localhost:8081/api/weather
+ 
 http://localhost:8081/api/weather/upload  (POST)
 http://localhost:8081/api/weather/month?year=1996&month=11 (GET)
 http://localhost:8081/api/weather/stats/1996 (GET)
