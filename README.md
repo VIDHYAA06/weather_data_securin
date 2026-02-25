@@ -1,0 +1,51 @@
+# weather_data_securin
+
+This is a Spring Boot backend application that processes nearly 20 years of Delhi weather forecast data from a CSV file and exposes REST APIs to retrieve filtered weather details and monthly temperature statistics.
+
+The application:
+
+Accepts large CSV file uploads
+Cleans and stores data in MongoDB
+Provides month-wise weather retrieval
+Calculates high, minimum, and median temperature
+Follows layered architecture (Controller → Service → Repository)
+
+Technologies Used:
+
+Java 17
+Spring Boot
+Spring Data MongoDB
+MongoDB
+OpenCSV
+Maven
+Lombok
+
+Project Structure:
+
+com.securin.weatherdata
+ ├── controller
+ ├── service
+ ├── repository
+ ├── entity
+ ├── dto
+ └── exception
+
+
+ END POINTS:
+ Base url : http://localhost:8081/api/weather
+http://localhost:8081/api/weather/upload  (POST)
+http://localhost:8081/api/weather/month?year=1996&month=11 (GET)
+http://localhost:8081/api/weather/stats/1996 (GET)
+
+UPLOAD SUCCESS:
+<img width="1562" height="639" alt="upload_success" src="https://github.com/user-attachments/assets/bd2d95dc-8178-480e-adbc-a522b289fe37" />
+MONTH OUTPUT:
+<img width="1707" height="812" alt="month_output" src="https://github.com/user-attachments/assets/3f4bc745-a47b-4808-813a-f1d2af339f8f" />
+STATS OUTPUT:
+<img width="1593" height="664" alt="stats_output" src="https://github.com/user-attachments/assets/c09489bf-c8ee-482c-8ffc-51b0da4f0e8b" />
+
+
+
+
+
+ 
